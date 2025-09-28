@@ -1,0 +1,19 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ThrashCounter : BaseCounter
+{
+    public static event EventHandler OnAnyObjectTrashed;
+
+    public static void ResetStaticdata() {
+        OnAnyObjectTrashed = null;
+    }
+    public override void Interact(Player player) {
+        if (player.HasKitchenObject())
+            player.GetKitchenObject().DestroySelf();
+
+        OnAnyObjectTrashed?.Invoke(this, EventArgs.Empty);
+    }
+}
